@@ -182,18 +182,9 @@ preview_window = None
 user_id = ""
 image_names = []
 
-# Función para mostrar la vista previa de la cámara
+
+# Función para mostrar la vista previa de la cámara en una ventana nueva
 def show_camera_preview(camera_index):
-    global camera_frame, cap
-
-    cap = cv2.VideoCapture(int(camera_index))
-
-    camera_frame = tk.Frame(preview_window)
-    camera_frame.pack()
-
-    img_label = tk.Label(camera_frame)
-    img_label.pack()
-
     def update_frame():
         ret, frame = cap.read()
         if ret:
@@ -203,13 +194,23 @@ def show_camera_preview(camera_index):
             img = Image.fromarray(frame)
             img_tk = ImageTk.PhotoImage(image=img)
 
-            img_label.img_tk = img_tk
+            img_label.img_tk = img_tk  # Mantener referencia para evitar que se elimine
             img_label.config(image=img_tk)
-            
-        camera_frame.after(10, update_frame)
+
+        img_label.after(10, update_frame)
+
+    global cap
+    cap = cv2.VideoCapture(int(camera_index))
+
+    # Crear una nueva ventana para la vista previa
+    global preview_window_camera
+    preview_window_camera = tk.Toplevel()
+    preview_window_camera.title("Vista Previa de la Cámara")
+    
+    img_label = tk.Label(preview_window_camera)
+    img_label.pack()
 
     update_frame()
-
 
 def getParametrosDB():
     connection = None
@@ -253,6 +254,8 @@ def start_camera(phase, photos_total, interval, id_user):
     global preview_window
     preview_window = tk.Tk()
     preview_window.title("Vista Previa de Cámara")
+
+
     
     # Establecer un estilo para la ventana
     preview_window.configure(bg="#f0f0f0")
@@ -343,7 +346,9 @@ def ask_to_save_photos(phase, photos_total, interval, user_id,):
     result = messagebox.askquestion("Fotos Capturadas", "¿Deseas guardar las fotos?")
     
     if result == 'yes':
+        
         messagebox.showinfo("Guardado", "Las fotos han sido guardadas exitosamente.")
+        preview_window_camera.destroy()  # Cerrar la ventana de vista previa
         if phase == 'uña':
             # Aquí puedes cerrar la ventana de la cámara de la uña
             preview_window.destroy()  # Cierra la ventana de la cámara de la uña
