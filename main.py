@@ -133,19 +133,20 @@ def test_camera():
 def save_configuration():
     global cap  # Declarar la variable cap como global
     try:
-        num_photos = int(num_photos_entry.get())
-        total_time_minutes = int(total_time_entry.get())
+        # Asignar valores predeterminados si los campos están vacíos
+        num_photos = int(num_photos_entry.get() or 10)  # Default 10 photos
+        total_time_minutes = int(total_time_entry.get() or 1)  # Default 1 minute
         total_time_seconds = total_time_minutes * 60  # Convertir a segundos
         interval_seconds = total_time_seconds // num_photos  # Calcular el intervalo entre fotos
-        
+
         selected_camera = camera_combo.get()  # Guardar el dispositivo de cámara seleccionado
-        
+
         messagebox.showinfo(
             "Configuración Guardada", 
             f"Cámara seleccionada: {selected_camera}\nCantidad de Fotos: {num_photos}\n"
             f"Tiempo total: {total_time_minutes} minutos\nIntervalo entre fotos: {interval_seconds} segundos"
         )
-        
+
         # Actualizar la tabla "tiempo" con los nuevos valores
         update_tiempo(num_photos, total_time_seconds, interval_seconds)
 
@@ -153,7 +154,7 @@ def save_configuration():
         if cap is not None and cap.isOpened():
             cap.release()
             cap = None  # Reiniciar la variable cap
-        
+
         # Habilitar el botón "Continuar" después de guardar la configuración
         continue_button.config(state=tk.NORMAL)
 
