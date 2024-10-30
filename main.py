@@ -174,6 +174,7 @@ if __name__ == "__main__":
     root = tk.Tk()
     
     root.title("App de Pruebas")
+    root.configure(bg='#003366')
 
     # Crear la tabla en la base de datos
     create_table()

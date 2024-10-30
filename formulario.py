@@ -258,7 +258,7 @@ def start_camera(phase, photos_total, interval, id_user):
 
     
     # Establecer un estilo para la ventana
-    preview_window.configure(bg="#f0f0f0")
+    preview_window.configure(bg="#003366")
     
     tk.Label(preview_window, text="Selecciona la cámara:", bg="#f0f0f0", font=("Arial", 12)).pack(padx=5, pady=5)
     
@@ -392,6 +392,7 @@ def on_capture_complete():
 # Crear la ventana del formulario
 form_window = tk.Tk()
 form_window.title("Formulario de Datos Personales")
+form_window.configure(bg='#003366')
 
 # Labels y entradas
 tk.Label(form_window, text="Nombre:").grid(row=0, column=0, padx=5, pady=5)
