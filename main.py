@@ -167,59 +167,61 @@ def continue_action():
     subprocess.Popen(['python', 'formulario.py'])
     
     # Cerrar la ventana principal después de ejecutar el formulario
-    root.destroy()
+    #root.destroy()
 
 # Crear la ventana principal
-root = tk.Tk()
-root.title("App de Pruebas")
+if __name__ == "__main__":
+    root = tk.Tk()
+    
+    root.title("App de Pruebas")
 
-# Crear la tabla en la base de datos
-create_table()
+    # Crear la tabla en la base de datos
+    create_table()
 
-# GroupBox 1: Test de conexión a la base de datos
-db_group = tk.LabelFrame(root, text="Test de Conexión a la DB", padx=10, pady=10)
-db_group.pack(padx=10, pady=10, fill="both", expand="yes")
+    # GroupBox 1: Test de conexión a la base de datos
+    db_group = tk.LabelFrame(root, text="Test de Conexión a la DB", padx=10, pady=10)
+    db_group.pack(padx=10, pady=10, fill="both", expand="yes")
 
-# Botón para probar la conexión
-db_test_button = tk.Button(db_group, text="Probar Conexión", command=test_db_connection)
-db_test_button.grid(row=0, columnspan=2, pady=10)
+    # Botón para probar la conexión
+    db_test_button = tk.Button(db_group, text="Probar Conexión", command=test_db_connection)
+    db_test_button.grid(row=0, columnspan=2, pady=10)
 
-# GroupBox 2: Prueba de cámara
-camera_group = tk.LabelFrame(root, text="Prueba de Cámara", padx=10, pady=10)
-camera_group.pack(padx=10, pady=10, fill="both", expand="yes")
+    # GroupBox 2: Prueba de cámara
+    camera_group = tk.LabelFrame(root, text="Prueba de Cámara", padx=10, pady=10)
+    camera_group.pack(padx=10, pady=10, fill="both", expand="yes")
 
-tk.Label(camera_group, text="Selecciona Cámara:").grid(row=0, column=0, padx=5, pady=5)
+    tk.Label(camera_group, text="Selecciona Cámara:").grid(row=0, column=0, padx=5, pady=5)
 
-# Obtener cámaras disponibles y agregar al combo box
-available_cameras = get_available_cameras()
-camera_combo = ttk.Combobox(camera_group, values=[f"{index} - {name}" for index, name in available_cameras])
-camera_combo.grid(row=0, column=1, padx=5, pady=5)
-camera_combo.current(0)
+    # Obtener cámaras disponibles y agregar al combo box
+    available_cameras = get_available_cameras()
+    camera_combo = ttk.Combobox(camera_group, values=[f"{index} - {name}" for index, name in available_cameras])
+    camera_combo.grid(row=0, column=1, padx=5, pady=5)
+    camera_combo.current(0)
 
-camera_test_button = tk.Button(camera_group, text="Probar Cámara", command=test_camera)
-camera_test_button.grid(row=1, columnspan=2, pady=10)
+    camera_test_button = tk.Button(camera_group, text="Probar Cámara", command=test_camera)
+    camera_test_button.grid(row=1, columnspan=2, pady=10)
 
-# GroupBox 3: Configuración
-config_group = tk.LabelFrame(root, text="Configuración de Captura", padx=10, pady=10)
-config_group.pack(padx=10, pady=10, fill="both", expand="yes")
+    # GroupBox 3: Configuración
+    config_group = tk.LabelFrame(root, text="Configuración de Captura", padx=10, pady=10)
+    config_group.pack(padx=10, pady=10, fill="both", expand="yes")
 
-tk.Label(config_group, text="Cantidad de Fotos:").grid(row=0, column=0, padx=5, pady=5)
-num_photos_entry = tk.Entry(config_group)
-num_photos_entry.grid(row=0, column=1, padx=5, pady=5)
+    tk.Label(config_group, text="Cantidad de Fotos:").grid(row=0, column=0, padx=5, pady=5)
+    num_photos_entry = tk.Entry(config_group)
+    num_photos_entry.grid(row=0, column=1, padx=5, pady=5)
 
-tk.Label(config_group, text="Tiempo Total (minutos):").grid(row=1, column=0, padx=5, pady=5)
-total_time_entry = tk.Entry(config_group)
-total_time_entry.grid(row=1, column=1, padx=5, pady=5)
+    tk.Label(config_group, text="Tiempo Total (minutos):").grid(row=1, column=0, padx=5, pady=5)
+    total_time_entry = tk.Entry(config_group)
+    total_time_entry.grid(row=1, column=1, padx=5, pady=5)
 
-save_button = tk.Button(config_group, text="Guardar Configuración", command=save_configuration)
-save_button.grid(row=2, columnspan=2, pady=10)
+    save_button = tk.Button(config_group, text="Guardar Configuración", command=save_configuration)
+    save_button.grid(row=2, columnspan=2, pady=10)
 
-# Botón "Continuar", inicialmente deshabilitado
-continue_button = tk.Button(root, text="Continuar", state=tk.DISABLED, command=continue_action)
-continue_button.pack(pady=20)
+    # Botón "Continuar", inicialmente deshabilitado
+    continue_button = tk.Button(root, text="Continuar", state=tk.DISABLED, command=continue_action)
+    continue_button.pack(pady=20)
 
-# Iniciar el loop de la aplicación
-root.mainloop()
+    # Iniciar el loop de la aplicación
+    root.mainloop()
 
-# Cerrar la conexión al finalizar la aplicación
-cnx.close()
+    # Cerrar la conexión al finalizar la aplicación
+    cnx.close()
